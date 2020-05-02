@@ -1,5 +1,12 @@
 class ExpensesController < ApplicationController
   def index
-    @tab = :expenses
+    @expenses = Expense.all
+    @categories = Category.all
+    @types = Type.all
+  end
+
+  respond_to do |format|
+    format.js
+    format.html {render 'index'}
   end
 end

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  value: 1
+  concept: MyString
+  created_at: 2020-04-30
+  type: one
+  category: one
+
+two:
+  id: 1
+  value: 1
+  concept: MyString
+  created_at: 2020-04-30
+  type: two
+  category: two
