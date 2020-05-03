@@ -1,4 +1,4 @@
-ActiveRecord::Schema.define(version: 2020_04_30_164056) do
+ActiveRecord::Schema.define(version: 2020_05_30_163936) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"

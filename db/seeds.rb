@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'faker'
+
 c1 = Category.create(name: 'Transporte')
 c2 = Category.create(name: 'Servicios públicos')
 c3 = Category.create(name: 'Hipoteca')
@@ -24,13 +28,14 @@ t2.save
 t3.save
 t4.save
 
-30.times do
+50.times do
   a = Expense.create(
     type_id: rand(1..Type.count),
     category_id: rand(1..Category.count),
     concept: Faker::TvShows::RickAndMorty.quote,
     expense_date: Faker::Time.between(from: Date.today - 240, to: Date.today),
-    value: Faker::Number.between(1, 5000000)
+    created_at: Faker::Time.between(from: Date.today - 20, to: Date.today),
+    value: Faker::Number.between(from: 1, to: 5000000)
   )
   a.save
 end
