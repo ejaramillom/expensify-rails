@@ -33,23 +33,19 @@
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <a href="#" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus"></span> Nuevo gasto</a>
+          <div id="selector_modal">
+            <%= link_to "<span class='glyphicon glyphicon-plus'></span> Nuevo gasto".html_safe, new_expense_path, remote: true, class: "btn btn-success pull-left" %>
+          </div>
+
           <h4 class="dropdown pull-right">
-            <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">Abril 2020 <span class="caret"></span></button>
+            <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown"> <%= @expense_date %><span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu">
-              <li role="presentation"><a href="#">Mayo 2020</a></li>
-              <li role="presentation"><a href="#">Abril 2020</a></li>
-              <li role="presentation"><a href="#">Marzo 2020</a></li>
-              <li role="presentation"><a href="#">Febrero 2020</a></li>
-              <li role="presentation"><a href="#">Enero 2020</a></li>
-              <li role="presentation"><a href="#">Diciembre 2019</a></li>
-              <li role="presentation"><a href="#">Noviembre 2019</a></li>
-              <li role="presentation"><a href="#">Octubre 2019</a></li>
-              <li role="presentation"><a href="#">Septiembre 2019</a></li>
-              <li role="presentation"><a href="#">Agosto 2019</a></li>
-              <li role="presentation"><a href="#">Julio 2019</a></li>
+              <% @months_list.each do |month| %>
+              <li role="presentation">
+                <%= link_to month.strftime("%B %Y"), expenses_path( request.query_parameters.merge( :month => month.strftime("%B %Y") )), class: 'month-item'  %>
+              </li>
+              <% end %>
             </ul>
-          </h4>
         </div>
       </div>
 
@@ -64,30 +60,11 @@
         </thead>
         <tbody>
           <% @expenses.each do |expense|%>
-          <tr>
-            <td class="expense_date">
-              <div class="day"><%= expense.expense_date.day %></div>
-              <div class="month"><%= expense.expense_date.strftime("%b") %></div>
-            </td>
-            <td>
-              <div>
-                <span class="type"><%= expense.type.name  %></span>
-              </div>
-              <div>
-                <span class="concept"><%= expense.concept %></span>
-              </div>
-            </td>
-            <td class="category text-right"><%= expense.category.name %></td>
-            <td class="text-right" style="width: 170px;">
-              <div class="amount"><%= expense.value %></div>
-              <div class="actions">
-                <a href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a>
-                <a href="#"><span class="glyphicon glyphicon-trash"></span> Borrar</a>
-            </td>
-          </tr>
+            <%= render "row", expense: expense %>
           <% end %>
         </tbody>
       </table>
+
     </div>
   </div>
 </div>

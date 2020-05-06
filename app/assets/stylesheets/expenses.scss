@@ -17,7 +17,9 @@
   padding: 7px 15px;
 }
 
-a.list-group-item { color: #808487; }
+a.list-group-item {
+  color: #808487;
+}
 
 .summary-box {
   padding: 10px;
@@ -60,5 +62,10 @@ a.list-group-item { color: #808487; }
     }
   }
 
-  tr:hover .actions a { visibility: visible; }
+  tr:hover .actions a {
+    visibility: visible;
+  }
 }
+
+.visited {
+  color: #fff }

@@ -22,7 +22,7 @@ en:
         other: menos de %{count} minutos
       over_x_years:
         one: más de 1 año
-        other: mś de %{count} años
+        other: más de %{count} años
       x_seconds:
         one: 1 segundo
         other: "%{count} segundo"
@@ -144,6 +144,16 @@ en:
         password: "Contraseña"
         name: "Nombre"
         body: "Cuerpo"
+      number_to_human:
+        million: "millones"
+      expense:
+        expense_date: "Fecha de gasto"
+        value: "Precio"
+        type: "Tipo"
+        category: "Categoria"
+        concept: "Concepto"
+      number_to_human:
+        million: "millones"
     datetime:
       distance_in_words:
         about_x_hours:

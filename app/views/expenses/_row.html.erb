@@ -1,0 +1,21 @@
+<tr>
+  <td class="expense_date" data-id='<%= expense.id %>'>
+    <div class="day"><%= expense.expense_date.day %></div>
+    <div class="month"><%= expense.expense_date.strftime("%b") %></div>
+  </td>
+  <td>
+    <div>
+      <span class="type"><%= expense.type.name  %></span>
+    </div>
+    <div>
+      <span class="concept"><%= expense.concept %></span>
+    </div>
+  </td>
+  <td class="category text-right"><%= expense.category.name %></td>
+  <td class="text-right" style="width: 170px;">
+    <div class="amount"><%= expense.value %></div>
+    <div class="actions">
+      <%= link_to "<span class='glyphicon glyphicon-edit'></span> edit".html_safe, edit_expense_path( expense.id ), remote: true%>
+      <%= link_to "<span class='glyphicon glyphicon-trash'><span> delete".html_safe, expense_path( expense.id ),:data => {:confirm =>"Estas seguro?",:method => 'delete', remote: true} %>
+  </td>
+</tr>
