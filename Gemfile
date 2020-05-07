@@ -17,10 +17,13 @@ gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
 gem 'by_star', git: "git://github.com/radar/by_star"
+gem 'chartkick'
+gem 'groupdate', '~> 5.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'sqlite3', '~> 1.4'
+  gem 'rspec-rails', '~> 4.0.0'
 end
 
 group :development do

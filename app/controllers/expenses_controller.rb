@@ -20,6 +20,9 @@ class ExpensesController < ApplicationController
     if category_id.present?
       @expenses = Expense.by_month( @expense_date ).select_category( category_id.to_i ).order("expense_date DESC")
     end
+    if category_id.present? && type_id.present?
+      @expenses = Expense.by_month( @expense_date ).select_category( category_id.to_i ).select_type( type_id.to_i ).order("expense_date DESC")
+    end
 
     respond_to do |format|
       format.js

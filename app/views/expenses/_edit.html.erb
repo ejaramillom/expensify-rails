@@ -1,0 +1,53 @@
+<div id="expense-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="modal-title" >Editar gasto</h2>
+      </div>
+      <%= form_for @expense, remote: true do |f| %>
+
+      <% if @expense.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@expense.errors.count, "error") %> ocasionaron que no se pudiera guardar:</h2>
+
+          <ul>
+          <% @expense.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.label "Tipo de gasto" %>
+          <%= f.collection_select(:type_id, Type.all, :id, :name, {}, {:class=>'btn btn-primary dropdown-toggle'}) %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Concepto" %>
+          <%= f.text_field :concept, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Valor" %>
+          <%= f.text_field :value, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Fecha de gasto" %>
+          <%= f.date_field :expense_date, class: 'form-control' %>
+        </div>
+        <div>
+          <%= f.label "Categoria" %>
+          <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {:class=>'btn btn-primary dropdown-toggle'}) %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit 'Editar gasto', class: "btn btn-primary btn-lg btn-block" %>
+        <button type="button" class="btn btn-secondary btn-lg btn-block" data-dismiss="modal">Cerrar</button>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

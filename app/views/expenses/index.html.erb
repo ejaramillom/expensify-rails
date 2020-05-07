@@ -4,13 +4,13 @@
       <h4 class="filter-header">Tipo <span>Seleccione para filtrar</span></h4>
       <div class="list-group filter-type">
         <% @types.each do |type|%>
-          <%= link_to type.name, { controller: 'expenses', action: 'index', :type_id => type.id }, class: 'list-group-item' %>
+          <%= link_to type.name, expenses_path( request.query_parameters.merge( :type_id => type.id )), class: 'list-group-item' %>
         <% end %>
       </div>
       <h4 class="filter-header">Categoría <span>Selecciona para filtrar</span></h4>
       <div class="list-group filter-type">
         <% @categories.each do |category|%>
-          <%= link_to category.name, { controller: 'expenses', action: 'index', :category_id => category.id }, class: 'list-group-item' %>
+          <%= link_to category.name, expenses_path( request.query_parameters.merge( :category_id => category.id )), class: 'list-group-item' %>
         <% end %>
       </div>
     </div>
@@ -68,3 +68,7 @@
     </div>
   </div>
 </div>
+
+<script>
+  new filterView();
+</script>

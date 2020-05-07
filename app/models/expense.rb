@@ -5,11 +5,12 @@ class Expense < ApplicationRecord
   belongs_to :category
   by_star_field :expense_date
 
-  scope :select_category, ->(category) {Expense.where("category_id = ?", category)}
-  scope :select_type, ->(type) {Expense.where("type_id = ?", type)}
-  scope :select_month, ->(month) {Expense.where('extract(month from expense_date) = ?', month)}
-  scope :select_year, ->(year) {Expense.where('extract(year from expense_date) = ?', year)}
-  scope :last_6_months, -> {Expense.where("expense_date >= :start_date AND expense_date <= :end_date",{start_date: DateTime.now.months_ago(6).at_beginning_of_month, end_date: DateTime.now.at_end_of_month})}
+  scope :select_category, ->( category ) { Expense.where( 'category_id = ?', category )}
+  scope :select_type, ->( type ) { Expense.where( 'type_id = ?', type )}
+  scope :select_day, ->{ Expense.group_by_day( :expense_date, last: 8, series: true, format: "%e %B" )}
+  scope :select_month, ->{ Expense.group_by_month( :expense_date, last: 1, series: true, format: "%B %Y" )}
+  scope :select_year, ->{ Expense.group_by_year( :expense_date, last: 1, series: true, format: " %Y" )}
+  scope :last_6_months, -> { Expense.group_by_month( :expense_date, last: 6, series: true, format: "%b %Y" )}
 
   validates :concept, :value, :expense_date, presence: { message: ": por favor llene el campo en blanco" }
   validate :date_cannot_be_in_the_future

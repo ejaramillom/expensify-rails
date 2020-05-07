@@ -15,7 +15,7 @@
   <td class="text-right" style="width: 170px;">
     <div class="amount"><%= expense.value %></div>
     <div class="actions">
-      <%= link_to "<span class='glyphicon glyphicon-edit'></span> edit".html_safe, edit_expense_path( expense.id ), remote: true%>
-      <%= link_to "<span class='glyphicon glyphicon-trash'><span> delete".html_safe, expense_path( expense.id ),:data => {:confirm =>"Estas seguro?",:method => 'delete', remote: true} %>
+      <%= link_to "<span class='glyphicon glyphicon-edit'></span> edit".html_safe, edit_expense_path( expense.id ), remote: true %>
+      <%= link_to "<span class='glyphicon glyphicon-trash'></span> delete".html_safe, expense_path( expense.id ),:data => { :confirm => "Estas seguro?", :method => 'delete', remote: true } %>
   </td>
 </tr>
