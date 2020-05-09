@@ -1,0 +1,727 @@
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "categories"[0m
+  [1m[35m (409.7ms)[0m  [1m[35mCREATE TABLE "categories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "expenses"[0m
+  [1m[35m (109.6ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "concept" varchar, "expense_date" date, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (109.8ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (99.0ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "types"[0m
+  [1m[35m (76.5ms)[0m  [1m[35mCREATE TABLE "types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (85.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+, CONSTRAINT "fk_rails_08549c94f9"
+FOREIGN KEY ("type_id")
+  REFERENCES "types" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (68.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (128.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (85.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200530163936)[0m
+  [1m[35m (88.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200430164029),
+(20200430164056);
+
+[0m
+  [1m[35m (106.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2020-05-09 17:13:04.299214"], ["updated_at", "2020-05-09 17:13:04.299214"]]
+  [1m[35m (71.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "31fb72582fcd4eb9763d5e4f3b4665ade689b6c4"], ["created_at", "2020-05-09 17:13:04.378854"], ["updated_at", "2020-05-09 17:13:04.378854"]]
+  [1m[35m (91.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "categories"[0m
+  [1m[35m (225.6ms)[0m  [1m[35mCREATE TABLE "categories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "expenses"[0m
+  [1m[35m (267.5ms)[0m  [1m[35mCREATE TABLE "categories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "expenses"[0m
+  [1m[35m (228.5ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "concept" varchar, "expense_date" date, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (223.2ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "concept" varchar, "expense_date" date, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (209.3ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (204.5ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (176.5ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "types"[0m
+  [1m[35m (190.8ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "types"[0m
+  [1m[35m (237.7ms)[0m  [1m[35mCREATE TABLE "types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (285.1ms)[0m  [1m[35mCREATE TABLE "types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (163.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+, CONSTRAINT "fk_rails_08549c94f9"
+FOREIGN KEY ("type_id")
+  REFERENCES "types" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (186.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aexpenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_type_id" ON "aexpenses" ("type_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aexpenses_on_category_id" ON "aexpenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "aexpenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "expenses"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "expenses"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "expenses" ("id" integer NOT NULL PRIMARY KEY, "value" integer DEFAULT NULL, "concept" varchar DEFAULT NULL, "expense_date" date DEFAULT NULL, "type_id" integer NOT NULL, "category_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_06966d0da0"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+, CONSTRAINT "fk_rails_08549c94f9"
+FOREIGN KEY ("type_id")
+  REFERENCES "types" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_category_id" ON "expenses" ("category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_expenses_on_type_id" ON "expenses" ("type_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "expenses" ("id","value","concept","expense_date","type_id","category_id","created_at","updated_at")
+                     SELECT "id","value","concept","expense_date","type_id","category_id","created_at","updated_at" FROM "aexpenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aexpenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (169.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (145.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (220.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (220.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (120.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200530163936)[0m
+  [1m[35m (120.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200530163936)[0m
+  [1m[35m (121.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200430164029),
+(20200430164056);
+
+[0m
+  [1m[35m (121.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200430164029),
+(20200430164056);
+
+[0m
+  [1m[35m (150.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (169.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2020-05-09 17:13:06.852195"], ["updated_at", "2020-05-09 17:13:06.852195"]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2020-05-09 17:13:06.866353"], ["updated_at", "2020-05-09 17:13:06.866353"]]
+  [1m[35m (125.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "31fb72582fcd4eb9763d5e4f3b4665ade689b6c4"], ["created_at", "2020-05-09 17:13:06.988224"], ["updated_at", "2020-05-09 17:13:06.988224"]]
+  [1m[35m (170.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "31fb72582fcd4eb9763d5e4f3b4665ade689b6c4"], ["created_at", "2020-05-09 17:13:07.046062"], ["updated_at", "2020-05-09 17:13:07.046062"]]
+  [1m[35m (170.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (147.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (1.1ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:13:07.299308', '2020-05-09 17:13:07.299308');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:13:07.299308', '2020-05-09 17:13:07.299308');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:13:07.303165');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:13:07.303165');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:13:07.306484', '2020-05-09 17:13:07.306484');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:13:07.306484', '2020-05-09 17:13:07.306484')[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mFixtures Load (3.1ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:13:07.299309', '2020-05-09 17:13:07.299309');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:13:07.299309', '2020-05-09 17:13:07.299309');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:13:07.303163');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:13:07.303163');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:13:07.306582', '2020-05-09 17:13:07.306582');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:13:07.306582', '2020-05-09 17:13:07.306582')[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.4ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.4ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.9ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:13:07.323829', '2020-05-09 17:13:07.323829');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:13:07.323829', '2020-05-09 17:13:07.323829');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:13:07.323945');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:13:07.323945');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:13:07.324289', '2020-05-09 17:13:07.324289');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:13:07.324289', '2020-05-09 17:13:07.324289')[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mFixtures Load (0.8ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:13:07.324846', '2020-05-09 17:13:07.324846');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:13:07.324846', '2020-05-09 17:13:07.324846');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:13:07.324951');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:13:07.324951');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:13:07.325265', '2020-05-09 17:13:07.325265');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:13:07.325265', '2020-05-09 17:13:07.325265')[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTruncate Tables (402.0ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[36mTruncate Tables (398.0ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (1.2ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:14:20.835597', '2020-05-09 17:14:20.835597');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:14:20.835597', '2020-05-09 17:14:20.835597');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:14:20.838410');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:14:20.838410');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:14:20.840287', '2020-05-09 17:14:20.840287');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:14:20.840287', '2020-05-09 17:14:20.840287')[0m
+  [1m[36mFixtures Load (1.1ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:14:20.835597', '2020-05-09 17:14:20.835597');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:14:20.835597', '2020-05-09 17:14:20.835597');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:14:20.838515');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:14:20.838515');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:14:20.840287', '2020-05-09 17:14:20.840287');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:14:20.840287', '2020-05-09 17:14:20.840287')[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (1.2ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:14:20.855577', '2020-05-09 17:14:20.855577');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:14:20.855577', '2020-05-09 17:14:20.855577');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:14:20.855661');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:14:20.855661');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:14:20.855808', '2020-05-09 17:14:20.855808');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:14:20.855808', '2020-05-09 17:14:20.855808')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mFixtures Load (0.9ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:14:20.857436', '2020-05-09 17:14:20.857436');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria dos', '2020-05-09 17:14:20.857436', '2020-05-09 17:14:20.857436');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:14:20.857545');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:14:20.857545');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:14:20.857715', '2020-05-09 17:14:20.857715');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo dos', '2020-05-09 17:14:20.857715', '2020-05-09 17:14:20.857715')[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTruncate Tables (343.2ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mTruncate Tables (370.4ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.9ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:15:52.312477', '2020-05-09 17:15:52.312477');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 17:15:52.312477', '2020-05-09 17:15:52.312477');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:15:52.314899');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:15:52.314899');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:15:52.317358', '2020-05-09 17:15:52.317358');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 17:15:52.317358', '2020-05-09 17:15:52.317358')[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.6ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 17:15:52.323076', '2020-05-09 17:15:52.323076');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 17:15:52.323076', '2020-05-09 17:15:52.323076');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 17:15:52.325881');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 17:15:52.325881');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 17:15:52.327833', '2020-05-09 17:15:52.327833');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 17:15:52.327833', '2020-05-09 17:15:52.327833')[0m
+  [1m[35m (131.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+ExpenseTest: test_Expense_concept_can't_be_blank_
+-------------------------------------------------
+  [1m[35m (159.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_type_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_date_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.3ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+ExpenseTest: test_Expense_value_can't_be_blank_
+-----------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.2ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTruncate Tables (751.5ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.6ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 18:09:18.317929', '2020-05-09 18:09:18.317929');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 18:09:18.317929', '2020-05-09 18:09:18.317929');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 18:09:18.321192');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 18:09:18.321192');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 18:09:18.323695', '2020-05-09 18:09:18.323695');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 18:09:18.323695', '2020-05-09 18:09:18.323695')[0m
+  [1m[36mTruncate Tables (831.3ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (1.6ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 18:09:18.407350', '2020-05-09 18:09:18.407350');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 18:09:18.407350', '2020-05-09 18:09:18.407350');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 18:09:18.411001');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 18:09:18.411001');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 18:09:18.414145', '2020-05-09 18:09:18.414145');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 18:09:18.414145', '2020-05-09 18:09:18.414145')[0m
+  [1m[35m (284.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+ExpenseTest: test_Expense_value_can't_be_blank_
+-----------------------------------------------
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (279.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_date_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.3ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------------------
+ExpenseTest: test_Date_cannot_be_in_the_future_should_avoid_wrong_date_info_
+----------------------------------------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.1ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+ExpenseTest: test_Expense_concept_can't_be_blank_
+-------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_type_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCategory Load (0.9ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.4ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTruncate Tables (839.4ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[36mTruncate Tables (831.8ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "types";
+DELETE FROM "expenses"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.8ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 18:09:38.612877', '2020-05-09 18:09:38.612877');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 18:09:38.612877', '2020-05-09 18:09:38.612877');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 18:09:38.616575');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 18:09:38.616575');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 18:09:38.620082', '2020-05-09 18:09:38.620082');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 18:09:38.620082', '2020-05-09 18:09:38.620082')[0m
+  [1m[36mFixtures Load (1.3ms)[0m  [1m[31mDELETE FROM "categories";
+DELETE FROM "expenses";
+DELETE FROM "types";
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (1, 'Categoria uno', '2020-05-09 18:09:38.612877', '2020-05-09 18:09:38.612877');
+INSERT INTO "categories" ("id", "name", "created_at", "updated_at") VALUES (2, 'Categoria dos', '2020-05-09 18:09:38.612877', '2020-05-09 18:09:38.612877');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (1, 1000000, 'Mariscos boda', 947609617, 531508140, '2020-03-01 00:00:00', '2020-05-09 18:09:38.616575');
+INSERT INTO "expenses" ("id", "value", "concept", "type_id", "category_id", "created_at", "updated_at") VALUES (2, 2000000, 'Coronitas cumpleaños', 333278343, 872949564, '2020-04-20', '2020-05-09 18:09:38.616575');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (1, 'Tipo uno', '2020-05-09 18:09:38.620052', '2020-05-09 18:09:38.620052');
+INSERT INTO "types" ("id", "name", "created_at", "updated_at") VALUES (2, 'Tipo dos', '2020-05-09 18:09:38.620052', '2020-05-09 18:09:38.620052')[0m
+  [1m[35m (237.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_date_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (362.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+ExpenseTest: test_Expense_concept_can't_be_blank_
+-------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.2ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------------------
+ExpenseTest: test_Date_cannot_be_in_the_future_should_avoid_wrong_date_info_
+----------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.1ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+ExpenseTest: test_Expense_value_can't_be_blank_
+-----------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "types"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mType Load (0.1ms)[0m  [1m[34mSELECT "types".* FROM "types" WHERE "types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+ExpenseTest: test_Expense_type_can't_be_blank_
+----------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m

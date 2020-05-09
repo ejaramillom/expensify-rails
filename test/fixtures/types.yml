@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+type_one:
   id: 1
-  name: MyString
+  name: "Tipo uno"
 
-two:
-  id: 1
-  name: MyString
+type_two:
+  id: 2
+  name: "Tipo dos"

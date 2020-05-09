@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+expense_one:
   id: 1
-  value: 1
-  concept: MyString
-  created_at: 2020-04-30
-  type: one
-  category: one
+  value: 1000000
+  concept: "Mariscos boda"
+  created_at: 2020-02-30
+  type: type_one
+  category: category_one
 
-two:
-  id: 1
-  value: 1
-  concept: MyString
-  created_at: 2020-04-30
-  type: two
-  category: two
+expense_two:
+  id: 2
+  value: 2000000
+  concept: "Coronitas cumpleaños"
+  created_at: 2020-04-20
+  type: type_two
+  category: category_two
