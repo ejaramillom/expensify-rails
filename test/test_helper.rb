@@ -2,16 +2,28 @@
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+require 'rspec/rails'
 require 'rails/test_help'
 require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+require 'capybara/rails'
+require 'capybara/minitest'
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
 
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
-
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
+end
 
-  # Add more helper methods to be used by all tests here...
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
+
+  def teardown
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
 end

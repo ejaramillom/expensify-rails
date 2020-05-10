@@ -24,7 +24,9 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'sqlite3', '~> 1.4'
   gem 'rspec-rails', '~> 4.0.0'
+  gem 'capybara', '>= 2.15'
   gem 'minitest-reporters'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -35,7 +37,6 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
