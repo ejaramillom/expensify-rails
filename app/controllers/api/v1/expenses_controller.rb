@@ -1,6 +1,6 @@
 class Api::V1::ExpensesController < ApplicationController
+  before_action :set_expense
   protect_from_forgery with: :null_session
-  respond_to :json
 
   def index
     expenses = Expense.order( "expense_date DESC" )
@@ -44,6 +44,10 @@ class Api::V1::ExpensesController < ApplicationController
 
   private
   def safe_params
-    params.require(:expense).permit(:type_id, :expense_date, :category_id, :concept, :amount)
+    params.require(:expense).permit(:type_id, :expense_date, :category_id, :concept, :value)
+  end
+
+  def set_expense
+    @expense = Expense.find(params[:id])
   end
 end
