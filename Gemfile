@@ -6,7 +6,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 gem 'jbuilder', '~> 2.7'
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 5.6'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 gem 'rubocop'
 gem 'rubocop-faker'
